@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Pile</title>
+</head>
+<body>
+
+    <div class="conteneur">
+        <h3>Qui va presenter ?</h3>
+        <div class="form">
+            <input type="text" id="nom" placeholder="Entrer les noms">
+            <button id="Ajout">Ajouter</button>
+        </div>
+        <button id="generer">Tirage</button>
+    </div>
+    
+    <p id="message"></p>
+
+    <script>
+        let nom = document.getElementById('nom');
+        let Ajouter = document.getElementById('Ajout');
+        let generer = document.getElementById('generer');
+        let message = document.getElementById('message');
+        let tableauNom = [];
+        
+        Ajouter.addEventListener('click', Ajout)
+        function Ajout(){
+            let saisi = nom.value;
+            if (saisi) {
+                tableauNom.push(saisi);
+                nom.value = '';
+            }
+        }
+
+        function aleatoire(min,max){
+            let repecher = Math.floor(Math.random() * (max - min + 1)) + min;
+            return repecher
+        }
+
+        generer.addEventListener('click', () => {
+            if(tableauNom.length > 0){
+                setTimeout(()=>{
+                    message.innerText = 'Tirage en cours...'
+                }, 500)
+                setTimeout(()=>{
+                    message.innerText = 'La personne qui va presenter est...'
+                }, 4500)
+                setTimeout(() => {
+                    let index = aleatoire(0, tableauNom.length - 1)
+                    message.innerText = tableauNom[index]
+                    message.style.color = 'rgb(221, 153, 64)';
+                    message.style.borderTop = '1px solid rgb(221, 153, 64)'
+                    message.style.borderBottom = '1px solid rgb(221, 153, 64)'
+                }, 7000)
+                generer.disabled = true
+                generer.style.opacity = '0.5'
+                
+            }else{
+                message.innerText = 'Veuillez Ajouter des Noms'
+            }
+        })
+    </script>
+</body>
+</html>
